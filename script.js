@@ -71,30 +71,65 @@ class User {
     constructor(email, name){
         this.email = email;
         this.name = name;
+        this.score = 0;
     }
     //define additional method
     login(){
         console.log(this.email, 'Just logged in')
+        return this;
     }
 
     logout(){
         console.log(this.email, 'Just logged out')
+        return this;
+    }
+    updateScore(){
+        this.score ++; // add 1 to initial score
+        console.log(this.name, 'score is now', this.score)
+
+        return this; //return the instace of the object
     }
 }
+
+
+
+
+
+
+
+
+
+//METHOD CHAINNING
+//User1.login().updateScore().updateScore().logout()
+
+
+//INHERITANCE -- use extends keyword
+
+class Admin extends User {
+    deleteUser(user){
+        users = users.filter(u => {
+            return u.email != user.email;
+        })
+    }
+}
+
 
 var User1 = new User('john@email.com', 'John')
 
 var User2 = new User('tom@email.com', 'Tom')
 
-
-console.log(User1)
-
-console.log(User2)
+var admin = new Admin('admin@admin.com', 'AdminUser')
 
 
-User1.login()
 
-User2.logout()
+var users = [User1, User2]
 
+//Admin ability to delete user
+admin.deleteUser(User1)
 
-//METHOD CHAINNING
+//User does not have access to delete users
+// User1.deleteUser(User2) //This will not  work
+
+admin.login()
+
+console.log(users)
